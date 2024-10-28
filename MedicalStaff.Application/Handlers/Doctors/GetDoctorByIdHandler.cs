@@ -8,25 +8,19 @@ using static MedicalStaff.Application.Requests.DoctorRequests;
 
 namespace MedicalStaff.Application.Handlers.Doctors
 {
-    public class GetDoctorByIdHandler : IRequestHandler<GetDoctorByIdRequest, ApiResponse<DoctorDTO>>
+    public class GetDoctorByIdHandler(IDoctorRepository _doctorRepository) : IRequestHandler<GetDoctorByIdRequest, ApiResponse<DoctorDTO>>
     {
-        private readonly IDoctorRepository _doctorRepository;
-        public GetDoctorByIdHandler(IDoctorRepository doctorRepository)
-        {
-            _doctorRepository = doctorRepository;
-        }
-
         public async Task<ApiResponse<DoctorDTO>> Handle(GetDoctorByIdRequest request, CancellationToken cancellationToken)
         {
             // Check if the doctor exists
             var doctor = await _doctorRepository.GetByIdAsync(request.Id);
-            var doctorDto = doctor.Adapt<DoctorDTO>();
-            if (doctorDto == null)
+            
+            if (doctor == null)
             {
                 return ApiResponse<DoctorDTO>.CreateErrorResponse($"Doctor with ID {request.Id} does not exist.");
             }
             
-            return ApiResponse<DoctorDTO>.CreateSuccessResponse(doctorDto, $"Doctor {doctorDto.Id} is retrieved successfully.");
+            return ApiResponse<DoctorDTO>.CreateSuccessResponse(doctor.Adapt<DoctorDTO>(), $"Doctor {doctor.Id} is retrieved successfully.");
         }
     }
 }

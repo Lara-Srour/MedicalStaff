@@ -9,15 +9,8 @@ using static MedicalStaff.Application.Requests.DoctorRequests;
 
 namespace MedicalStaff.Application.Doctors
 {
-    public class GetDoctorsBySpecialistHandler : IRequestHandler<GetDoctorsBySpecialtyRequest, ApiResponse<IEnumerable<DoctorDTO>>>
+    public class GetDoctorsBySpecialistHandler(IDoctorRepository _doctorRepository) : IRequestHandler<GetDoctorsBySpecialtyRequest, ApiResponse<IEnumerable<DoctorDTO>>>
     {
-        private readonly IDoctorRepository _doctorRepository;
-
-        public GetDoctorsBySpecialistHandler(IDoctorRepository doctorRepository)
-        {
-            _doctorRepository = doctorRepository;
-        }
-
         public async Task<ApiResponse<IEnumerable<DoctorDTO>>> Handle(GetDoctorsBySpecialtyRequest request, CancellationToken cancellationToken)
         {
             var doctors = await _doctorRepository.GetDoctorsBySpecialtyAsync(request.Specialty);
@@ -26,8 +19,8 @@ namespace MedicalStaff.Application.Doctors
             {
                 return ApiResponse<IEnumerable<DoctorDTO>>.CreateErrorResponse($"No doctors with this specialty found.");
             }
-            var doctorDtos = doctors.Adapt<IEnumerable<DoctorDTO>>();
-            return ApiResponse<IEnumerable<DoctorDTO>>.CreateSuccessResponse(doctorDtos, $"List of doctors of {request.Specialty} specialist is successfully retrieved.");
+           
+            return ApiResponse<IEnumerable<DoctorDTO>>.CreateSuccessResponse(doctors.Adapt<IEnumerable<DoctorDTO>>(), $"List of doctors of {request.Specialty} specialist is successfully retrieved.");
         }
     }       
 }

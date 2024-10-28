@@ -2,7 +2,7 @@
 using MedicalStaff.Application.DTOs;
 
 
-namespace MedicalStaff.Application.Validators
+namespace MedicalStaff.Application.DtoValidators
 {
     public class NurseValidator : AbstractValidator<NurseDTO>
     {

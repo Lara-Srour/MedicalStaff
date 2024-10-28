@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MedicalStaff.Application.DTOs;
-using MedicalStaff.Application.Requests.DepartmentRequests;
+using static MedicalStaff.Application.Requests.DepartmentRequests;
 using MediatR;
+using static MedicalStaff.Application.Requests.NurseRequests;
 
 namespace MedicalStaffAPI.Controllers
 {
@@ -68,13 +69,9 @@ namespace MedicalStaffAPI.Controllers
 
         // POST: api/Department
         [HttpPost]
-        public async Task<ActionResult<DepartmentDTO>> PostDepartment(DepartmentDTO department)
-        {
-            var request = new AddDepartmentRequest(department);
-            var response = await _mediator.Send(request);
-            return Ok(response);
+        public async Task<ActionResult<DepartmentDTO>> PostDepartment(AddDepartmentRequest command)
+        => Ok(await _mediator.Send(command));
 
-        }
 
         // DELETE: api/Department/5
         [HttpDelete("{id}")]

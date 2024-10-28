@@ -24,5 +24,29 @@ namespace MedicalStaff.Infrastructure
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source=medicalstaff.db");
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Department>()
+                .Property(p => p.Id)
+                .ValueGeneratedOnAdd(); // Configures Id to be auto-generated
+
+            modelBuilder.Entity<Nurse>()
+                .Property(n => n.Id)
+                .ValueGeneratedOnAdd(); 
+
+            modelBuilder.Entity<Doctor>()
+                .Property(d => d.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Patient>()
+                .Property(p => p.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Room>()
+                .Property(p => p.Id)
+                .ValueGeneratedOnAdd();
+
+            
+        }
     }
 }

@@ -7,39 +7,18 @@ namespace MedicalStaff.Application.Requests
     public class RoomRequests
     {
 
-        public class GetAllRoomsRequest : GetAllRequest<RoomDTO>
-        {
+        public record GetAllRoomsRequest : GetAllRequest<RoomDTO>;
 
-        }
+        public record GetRoomByIdRequest(int Id) : GetByIdRequest<RoomDTO>(Id);
 
-        public class GetRoomByIdRequest : GetByIdRequest<RoomDTO>
-        {
-            public GetRoomByIdRequest(int id) : base(id) { }
-        }
+        public record DisplayAvailableRoomsRequest(string DepartmentName) : IRequest<ApiResponse<IEnumerable<RoomDTO>>>;
 
-        public class DisplayAvailableRoomsRequest : IRequest<ApiResponse<IEnumerable<RoomDTO>>>
-        {
-            public string DepartmentName { get; }
-            public DisplayAvailableRoomsRequest(string departmentName)
-            {
-                DepartmentName = departmentName;
-            }
-        }
+        public record AddRoomRequest(int Number, string DepartmentName) : IRequest<ApiResponse<RoomDTO>>;
 
-        public class AddRoomRequest : AddRequest<RoomDTO>
-        {
-            public AddRoomRequest(RoomDTO room) : base(room) { }
-        }
+        public record UpdateRoomRequest(RoomDTO Room) : UpdateRequest<RoomDTO>(Room);
 
-        public class UpdateRoomRequest : UpdateRequest<RoomDTO>
-        {
-            public UpdateRoomRequest(RoomDTO room) : base(room) { }
-        }
-
-        public class DeleteRoomRequest : DeleteRequest<RoomDTO>
-        {
-            public DeleteRoomRequest(int id) : base(id) { }
-        }
+        public record DeleteRoomRequest(int Id) : DeleteRequest<RoomDTO>(Id);
+        
     }
 
 }

@@ -67,13 +67,10 @@ namespace MedicalStaffAPI.Controllers
 
         // POST: api/Nurse
         [HttpPost]
-        public async Task<ActionResult<NurseDTO>> PostNurse(NurseDTO nurse)
-        {
-            var request = new AddNurseRequest(nurse);
-            var response = await _mediator.Send(request);
-            return Ok(response);
+        public async Task<ActionResult<NurseDTO>> PostNurse(AddNurseRequest command)
+        => Ok(await _mediator.Send(command));
 
-        }
+   
 
         // DELETE: api/Nurse/5
         [HttpDelete("{id}")]

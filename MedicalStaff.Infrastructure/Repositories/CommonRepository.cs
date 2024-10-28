@@ -31,12 +31,12 @@ namespace MedicalStaff.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(T entity)
+        public async Task UpdateAsync(T entity) 
         {
             // Update the properties of the existing entity
             _context.Entry(entity).State = EntityState.Modified;
 
-            // Save changes to the database
+            //Save changes to the database
             await _context.SaveChangesAsync();
         }
 

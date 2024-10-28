@@ -4,25 +4,17 @@ using MedicalStaff.Domain;
 using MedicalStaff.Application.Interfaces;
 using MedicalStaff.Application.DTOs;
 using MedicalStaff.Application.Resposne;
-using MedicalStaff.Application.Requests.DepartmentRequests;
+using static MedicalStaff.Application.Requests.DepartmentRequests;
 using System.Collections.Generic;
 
 
-namespace MedicalStaff.Application.Departments
+namespace MedicalStaff.Application.Handlers.Departments
 {
-    public class DisplayRoomsInDepartmentHandler : IRequestHandler<DisplayRoomsInDepartmentRequest, ApiResponse<IEnumerable<RoomDTO>>>
+    public class DisplayRoomsInDepartmentHandler(IDepartmentRepository _departmentRepository) : IRequestHandler<DisplayRoomsInDepartmentRequest, ApiResponse<IEnumerable<RoomDTO>>>
     {
-        private readonly IDepartmentRepository _departmentRepository;
-
-        public DisplayRoomsInDepartmentHandler(IDepartmentRepository departmentRepository)
-        {
-            _departmentRepository = departmentRepository;
-        }
-
         public async Task<ApiResponse<IEnumerable<RoomDTO>>> Handle(DisplayRoomsInDepartmentRequest request, CancellationToken cancellationToken)
         {
             var rooms = await _departmentRepository.DisplayRoomsInDepartmentAsync(request.DepartmentName);
-            var roomDtos = rooms.Adapt<IEnumerable<RoomDTO>>();
             // Check if any rooms were found
             if (rooms == null || !rooms.Any())
             {
@@ -30,7 +22,7 @@ namespace MedicalStaff.Application.Departments
             }
 
             // Return a success response with the list of RoomDTOs
-            return ApiResponse<IEnumerable<RoomDTO>>.CreateSuccessResponse(roomDtos, $"List of rooms in {request.DepartmentName} department is successfully retrieved.");
+            return ApiResponse<IEnumerable<RoomDTO>>.CreateSuccessResponse(rooms.Adapt<IEnumerable<RoomDTO>>(), $"List of rooms in {request.DepartmentName} department is successfully retrieved.");
 
         }
     }       

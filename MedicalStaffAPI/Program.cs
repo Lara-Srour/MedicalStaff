@@ -1,17 +1,17 @@
 //using MedicalStaffAPI.Models;
-using MedicalStaff.Domain;
+
 using Microsoft.EntityFrameworkCore;
 using MedicalStaff.Infrastructure;
 using FluentValidation.AspNetCore;
 using MedicalStaff.Application.DtoValidators;
-using MedicalStaff.Application.Validators;
+
 using FluentValidation;
 using MedicalStaff.Infrastructure.Repositories;
 using MedicalStaff.Application.Interfaces;
 using System.Reflection;
-using MedicalStaff.Application;
+
 using MediatR;
-using MedicalStaff.Application.Departments;
+using MedicalStaff.Application.Handlers.Departments;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,10 +29,7 @@ builder.Services.AddFluentValidationClientsideAdapters();
 
 // Register all FluentValidators
 builder.Services.AddValidatorsFromAssemblyContaining<DepartmentValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<DoctorValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<NurseValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<PatientValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<RoomValidator>();
+
 
 // Register your repositories
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();

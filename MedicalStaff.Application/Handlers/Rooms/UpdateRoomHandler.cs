@@ -6,17 +6,10 @@ using MedicalStaff.Application.Resposne;
 using MedicalStaff.Domain;
 using static MedicalStaff.Application.Requests.RoomRequests;
 
-namespace MedicalStaff.Application.Rooms
+namespace MedicalStaff.Application.Handlers.Rooms
 {
-    public class UpdateRoomHandler : IRequestHandler<UpdateRoomRequest, ApiResponse<string>>
+    public class UpdateRoomHandler(IRoomRepository _roomRepository) : IRequestHandler<UpdateRoomRequest, ApiResponse<string>>
     {
-        private readonly IRoomRepository _roomRepository;
-
-        public UpdateRoomHandler(IRoomRepository roomRepository)
-        {
-            _roomRepository = roomRepository;
-        }
-
         public async Task<ApiResponse<string>> Handle(UpdateRoomRequest request, CancellationToken cancellationToken)
         {
             //map from RoomDTO to the entity Room
@@ -26,15 +19,16 @@ namespace MedicalStaff.Application.Rooms
             var existingRoom = await _roomRepository.GetByIdAsync(room.Id);
             if (existingRoom == null)
             {
-                return ApiResponse<string>.CreateErrorResponse($"Room with ID {roomDto.Id} does not exist.");
+                return ApiResponse<string>.CreateErrorResponse($"Room with ID {room.Id} does not exist.");
             }
 
             // Update existing nurse properties
+            
             existingRoom.DepartmentName = roomDto.DepartmentName;
             
 
             await _roomRepository.UpdateRoomAsync(existingRoom);           
-            return ApiResponse<string>.CreateSuccessResponse(default, $"Room {roomDto.Id} is updated.");
+            return ApiResponse<string>.CreateSuccessResponse(default, $"Room {room.Id} is updated.");
         }
     }
 } 

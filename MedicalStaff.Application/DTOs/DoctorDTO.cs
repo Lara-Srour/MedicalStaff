@@ -1,9 +1,8 @@
 ﻿namespace MedicalStaff.Application.DTOs
 {
-    public class DoctorDTO : IEntity
+    public record DoctorDTO(int Id, string? Name, string? Specialty) : IEntity
     {
-        public int Id { get; set; }
-        public string? Name { get; set; }
-        public string? Specialty { get; set; }
+        public int Id { get; set; } = Id;
+        
     }
 }

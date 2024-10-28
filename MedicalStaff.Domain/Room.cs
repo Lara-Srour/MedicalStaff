@@ -7,5 +7,11 @@
         public string? DepartmentName { get; set; }
         public bool IsAvailable { get; set; } = true;
 
+        public Room(int number, string departmentName)
+        {
+            Number = number;
+            DepartmentName = departmentName;
+        }
+        public Room(){ }
     }
 }

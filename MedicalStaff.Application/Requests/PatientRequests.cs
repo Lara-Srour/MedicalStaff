@@ -1,35 +1,20 @@
 ﻿using MediatR;
 using MedicalStaff.Application.DTOs;
+using MedicalStaff.Application.Resposne;
 
 namespace MedicalStaff.Application.Requests
 {
     public class PatientRequests
     {
 
-        public class GetAllPatientsRequest : GetAllRequest<PatientDTO>
-        {
+        public record GetAllPatientsRequest : GetAllRequest<PatientDTO>;
 
-        }
+        public record GetPatientByIdRequest(int Id) : GetByIdRequest<PatientDTO>(Id);
 
-        public class GetPatientByIdRequest : GetByIdRequest<PatientDTO>
-        {
-            public GetPatientByIdRequest(int id) : base(id) { }
-        }
+        public record AddPatientRequest(string Name, int DoctorId, int NurseId, int RoomNumber) : IRequest<ApiResponse<PatientDTO>>;
 
-        public class AddPatientRequest : AddRequest<PatientDTO>
-        {
-            public AddPatientRequest(PatientDTO patient) : base(patient) { }
-        }
-
-        public class UpdatePatientRequest : UpdateRequest<PatientDTO>
-        {
-            public UpdatePatientRequest(PatientDTO patient) : base(patient) { }
-        }
-
-        public class DeletePatientRequest : DeleteRequest<PatientDTO>
-        {
-            public DeletePatientRequest(int id) : base(id) { }
-
-        }
+        public record UpdatePatientRequest(PatientDTO Patient) : UpdateRequest<PatientDTO>(Patient);
+        public record DeletePatientRequest(int Id) : DeleteRequest<PatientDTO>(Id);
+        
     }
 }

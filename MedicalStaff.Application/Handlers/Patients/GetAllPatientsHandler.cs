@@ -8,22 +8,12 @@ using static MedicalStaff.Application.Requests.PatientRequests;
 
 namespace MedicalStaff.Application.Handlers.Patients
 {
-    public class GetAllPatientsHandler : IRequestHandler<GetAllPatientsRequest, ApiResponse<IEnumerable<PatientDTO>>>
+    public class GetAllPatientsHandler(IPatientRepository _patientRepository) : IRequestHandler<GetAllPatientsRequest, ApiResponse<IEnumerable<PatientDTO>>>
     {
-        private readonly IPatientRepository _patientRepository;
-
-        public GetAllPatientsHandler(IPatientRepository patientRepository)
-        {
-            _patientRepository = patientRepository;
-        }
-
         public async Task<ApiResponse<IEnumerable<PatientDTO>>> Handle(GetAllPatientsRequest request, CancellationToken cancellationToken)
         {
             var patients = await _patientRepository.GetAllAsync();
-
-            // map to Dto
-            var patientDtos = patients.Adapt<IEnumerable<PatientDTO>>();
-            return ApiResponse<IEnumerable<PatientDTO>>.CreateSuccessResponse(patientDtos, "Patients retrieved successfuly.");
+            return ApiResponse<IEnumerable<PatientDTO>>.CreateSuccessResponse(patients.Adapt<IEnumerable<PatientDTO>>(), "Patients retrieved successfuly.");
         }
     }
 }

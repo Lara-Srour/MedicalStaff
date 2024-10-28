@@ -8,15 +8,8 @@ using static MedicalStaff.Application.Requests.PatientRequests;
 
 namespace MedicalStaff.Application.Handlers.Patients
 {
-    public class DeletePatientHandler : IRequestHandler<DeletePatientRequest, ApiResponse<string>>
+    public class DeletePatientHandler(IPatientRepository _patientRepository) : IRequestHandler<DeletePatientRequest, ApiResponse<string>>
     {
-        private readonly IPatientRepository _patientRepository;
-
-        public DeletePatientHandler(IPatientRepository patientRepository)
-        {
-            _patientRepository = patientRepository;
-        }
-
         public async Task<ApiResponse<string>> Handle(DeletePatientRequest request, CancellationToken cancellationToken)
         {
             // Check if the patient exists

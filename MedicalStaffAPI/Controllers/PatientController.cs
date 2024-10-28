@@ -2,6 +2,7 @@
 using MedicalStaff.Application.DTOs;
 using static MedicalStaff.Application.Requests.PatientRequests;
 using MediatR;
+using static MedicalStaff.Application.Requests.NurseRequests;
 
 namespace MedicalStaffAPI.Controllers
 {
@@ -57,13 +58,8 @@ namespace MedicalStaffAPI.Controllers
 
         // POST: api/Patient
         [HttpPost]
-        public async Task<ActionResult<PatientDTO>> PostPatient(PatientDTO patient)
-        {
-            var request = new AddPatientRequest(patient);
-            var response = await _mediator.Send(request);   
-            return Ok(response);
-
-        }
+        public async Task<ActionResult<PatientDTO>> PostPatient(AddPatientRequest command)
+        => Ok(await _mediator.Send(command));
 
         // DELETE: api/Patient/5
         [HttpDelete("{id}")]

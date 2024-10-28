@@ -4,19 +4,12 @@ using MedicalStaff.Application.DTOs;
 using MedicalStaff.Application.Interfaces;
 using MedicalStaff.Application.Resposne;
 using MedicalStaff.Domain;
-using MedicalStaff.Application.Requests.DepartmentRequests;
+using static MedicalStaff.Application.Requests.DepartmentRequests;
 
-namespace MedicalStaff.Application.Departments
+namespace MedicalStaff.Application.Handlers.Departments
 {
-    public class DeleteDepartmentHandler : IRequestHandler<DeleteDepartmentRequest, ApiResponse<string>>
+    public class DeleteDepartmentHandler(IDepartmentRepository _departmentRepository) : IRequestHandler<DeleteDepartmentRequest, ApiResponse<string>>
     {
-        private readonly IDepartmentRepository _departmentRepository;
-
-        public DeleteDepartmentHandler(IDepartmentRepository departmentRepository)
-        {
-            _departmentRepository = departmentRepository;
-        }
-
         public async Task<ApiResponse<string>> Handle(DeleteDepartmentRequest request, CancellationToken cancellationToken)
         {
             // Check if the department exists

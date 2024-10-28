@@ -7,16 +7,9 @@ using MedicalStaff.Domain;
 using static MedicalStaff.Application.Requests.DoctorRequests;
 namespace MedicalStaff.Application.Doctors
 {
-    public class DeleteDoctorHandler : IRequestHandler<DeleteDoctorRequest, ApiResponse<string>>
+    public class DeleteDoctorHandler(IDoctorRepository _doctorRepository) : IRequestHandler<DeleteDoctorRequest, ApiResponse<string>>
     {
-        private readonly IDoctorRepository _doctorRepository;
-
-        public DeleteDoctorHandler(IDoctorRepository doctorRepository)
-        {
-            _doctorRepository = doctorRepository;
-        }
-
-        public async Task<ApiResponse<string>> Handle(DeleteDoctorRequest request, CancellationToken cancellationToken)
+       public async Task<ApiResponse<string>> Handle(DeleteDoctorRequest request, CancellationToken cancellationToken)
         {
             // Check if the doctor exists
             var existingdoctor = await _doctorRepository.GetByIdAsync(request.Id);

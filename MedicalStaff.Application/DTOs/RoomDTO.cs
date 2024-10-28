@@ -1,10 +1,7 @@
 ﻿namespace MedicalStaff.Application.DTOs
 {
-    public class RoomDTO : IEntity
+    public record RoomDTO(int Id, int Number, string? DepartmentName, bool IsAvailable = true) : IEntity
     {
-        public int Id { get; set; }
-        public int Number { get; set; }
-        public string? DepartmentName { get; set; }
-        public bool IsAvailable { get; set; } = true;
+        public int Id { get; set; } = Id;
     }
 }

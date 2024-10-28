@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MedicalStaff.Application.DTOs;
 
-namespace MedicalStaff.Application.Validators
+namespace MedicalStaff.Application.DtoValidators
 {
     public class DoctorValidator : AbstractValidator<DoctorDTO>
     {

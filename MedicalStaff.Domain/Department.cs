@@ -7,5 +7,11 @@ namespace MedicalStaff.Domain
     {
         public int Id { get; set; }
         public string? Name { get; set; }
+
+        public Department(string name) 
+        { 
+            Name = name;
+        }
+        public Department(){ }
     }
 }

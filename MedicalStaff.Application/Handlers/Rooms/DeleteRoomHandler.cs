@@ -5,17 +5,11 @@ using MedicalStaff.Application.Interfaces;
 using MedicalStaff.Application.Resposne;
 using MedicalStaff.Domain;
 using static MedicalStaff.Application.Requests.RoomRequests;
-namespace MedicalStaff.Application.Rooms
+
+namespace MedicalStaff.Application.Handlers.Rooms
 {
-    public class DeleteRoomHandler : IRequestHandler<DeleteRoomRequest, ApiResponse<string>>
+    public class DeleteRoomHandler(IRoomRepository _roomRepository) : IRequestHandler<DeleteRoomRequest, ApiResponse<string>>
     {
-        private readonly IRoomRepository _roomRepository;
-
-        public DeleteRoomHandler(IRoomRepository roomRepository)
-        {
-            _roomRepository = roomRepository;
-        }
-
         public async Task<ApiResponse<string>> Handle(DeleteRoomRequest request, CancellationToken cancellationToken)
         {
             // Check if the room exists

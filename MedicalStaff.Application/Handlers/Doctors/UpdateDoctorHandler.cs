@@ -9,15 +9,8 @@ using static MedicalStaff.Application.Requests.DoctorRequests;
 
 namespace MedicalStaff.Application.Doctors
 {
-    public class UpdateDoctorHandler : IRequestHandler<UpdateDoctorRequest, ApiResponse<string>>
+    public class UpdateDoctorHandler(IDoctorRepository _doctorRepository) : IRequestHandler<UpdateDoctorRequest, ApiResponse<string>>
     {
-        private readonly IDoctorRepository _doctorRepository;
-
-        public UpdateDoctorHandler(IDoctorRepository doctorRepository)
-        {
-            _doctorRepository = doctorRepository;
-        }
-
         public async Task<ApiResponse<string>> Handle(UpdateDoctorRequest request, CancellationToken cancellationToken)
         {
             //map from DoctorDTO to the entity Doctor
@@ -27,7 +20,7 @@ namespace MedicalStaff.Application.Doctors
             var existingDoctor = await _doctorRepository.GetByIdAsync(doctor.Id);
             if (existingDoctor == null)
             {
-                return ApiResponse<string>.CreateErrorResponse($"Doctor with ID {doctorDto.Id} does not exist.");
+                return ApiResponse<string>.CreateErrorResponse($"Doctor with ID {doctor.Id} does not exist.");
             }
 
             // Update existing doctor properties
@@ -35,7 +28,7 @@ namespace MedicalStaff.Application.Doctors
             existingDoctor.Specialty = doctorDto.Specialty;
             
             await _doctorRepository.UpdateAsync(existingDoctor);
-            return ApiResponse<string>.CreateSuccessResponse(default, $"Doctor {doctorDto.Id} is updated.");
+            return ApiResponse<string>.CreateSuccessResponse(default, $"Doctor {doctor.Id} is updated.");
         }
     }
 }

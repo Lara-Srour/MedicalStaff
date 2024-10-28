@@ -5,17 +5,11 @@ using MedicalStaff.Application.Interfaces;
 using MedicalStaff.Application.Resposne;
 using MedicalStaff.Domain;
 using static MedicalStaff.Application.Requests.NurseRequests;
+
 namespace MedicalStaff.Application.Handlers.Nurses
 {
-    public class DeleteNurseHandler : IRequestHandler<DeleteNurseRequest, ApiResponse<string>>
+    public class DeleteNurseHandler(INurseRepository _nurseRepository) : IRequestHandler<DeleteNurseRequest, ApiResponse<string>>
     {
-        private readonly INurseRepository _nurseRepository;
-
-        public DeleteNurseHandler(INurseRepository nurseRepository)
-        {
-            _nurseRepository = nurseRepository;
-        }
-
         public async Task<ApiResponse<string>> Handle(DeleteNurseRequest request, CancellationToken cancellationToken)
         {
             // Check if the nurse exists

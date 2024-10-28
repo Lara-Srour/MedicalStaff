@@ -2,42 +2,21 @@
 using MedicalStaff.Application.DTOs;
 using MedicalStaff.Application.Resposne;
 
+
 namespace MedicalStaff.Application.Requests
 {
     public class NurseRequests
     {
+        public record GetAllNursesRequest : GetAllRequest<NurseDTO>;
+        public record GetNurseByIdRequest(int Id) : GetByIdRequest<NurseDTO>(Id);
 
-        public class GetAllNursesRequest : GetAllRequest<NurseDTO>
-        {
+        public record GetNursesInDepartmentRequest(string DepartmentName) : IRequest<ApiResponse<IEnumerable<NurseDTO>>>;
 
-        }
-        public class GetNurseByIdRequest : GetByIdRequest<NurseDTO>
-        {
-            public GetNurseByIdRequest(int id) : base(id) { }
-        }
+        public record AddNurseRequest(string Name, string DepartmentName) : IRequest<ApiResponse<NurseDTO>>;
 
-        public class GetNursesInDepartmentRequest : IRequest<ApiResponse<IEnumerable<NurseDTO>>>
-        {
-            public string DepartmentName { get; }
-            public GetNursesInDepartmentRequest(string departmentName)
-            {
-                DepartmentName = departmentName;
-            }
-        }
+        public record UpdateNurseRequest(NurseDTO Nurse) : UpdateRequest<NurseDTO>(Nurse);
 
-        public class AddNurseRequest : AddRequest<NurseDTO>
-        {
-            public AddNurseRequest(NurseDTO nurse) : base(nurse) { }
-        }
-
-        public class UpdateNurseRequest : UpdateRequest<NurseDTO>
-        {
-            public UpdateNurseRequest(NurseDTO nurse) : base(nurse) { }
-        }
-
-        public class DeleteNurseRequest : DeleteRequest<NurseDTO>
-        {
-            public DeleteNurseRequest(int id) : base(id) { }
-        }
+        public record DeleteNurseRequest(int Id) : DeleteRequest<NurseDTO>(Id);
+        
     }
 }
